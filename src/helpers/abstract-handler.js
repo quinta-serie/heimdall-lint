@@ -26,18 +26,6 @@ class AbstractHandler {
 
     return null
   }
-
-  /**
-   * @param { * } data - The data object
-   * @return { AbstractHandler }
-   */
-  setUp(data) {
-    if (this.nextHandler) {
-      return this.nextHandler.setUp(data)
-    }
-
-    return null
-  }
 }
 
 module.exports = AbstractHandler
