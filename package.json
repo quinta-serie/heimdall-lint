@@ -1,0 +1,35 @@
+{
+  "name": "heimdall-lint",
+  "version": "1.0.0",
+  "description": "The lint who keeps watch for invaders your code style",
+  "main": "src/index.js",
+  "type": "commonjs",
+  "scripts": {
+    "test": "mocha --recursive src",
+    "test:coverage": "nyc --check-coverage --reporter=text -- npm run test",
+    "test:watch": "npm run test -- -w",
+    "lint": "eslint --ext .js src --max-warnings=0",
+    "lint:fix": "npm run lint -- --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quinta-serie/heimdall-lint.git"
+  },
+  "keywords": [
+    "lint",
+    "heimdall",
+    "global-lint"
+  ],
+  "author": "Edinho Monteiro <bruno.monteirodg@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/quinta-serie/heimdall-lint/issues"
+  },
+  "homepage": "https://github.com/quinta-serie/heimdall-lint#readme",
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "eslint": "^8.5.0",
+    "mocha": "^9.1.3",
+    "nyc": "^15.1.0"
+  }
+}
