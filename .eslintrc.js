@@ -43,9 +43,6 @@ module.exports = {
         FunctionExpression: true
       }
     }],
-    'valid-jsdoc': ['error', {
-      requireReturnDescription: false
-    }],
     'space-infix-ops': 'error',
     'object-curly-spacing': ['error', 'always'],
     'array-bracket-spacing': ['error', 'never'],
