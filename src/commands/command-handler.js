@@ -7,9 +7,7 @@ class CommandHandler {
   }
 
   _setUp() {
-    const cliCommandHandler = new CliCommandHandler()
-
-    return cliCommandHandler
+    return new CliCommandHandler()
   }
 
   /**
