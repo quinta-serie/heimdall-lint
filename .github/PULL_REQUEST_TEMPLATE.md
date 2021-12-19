@@ -1,5 +1,5 @@
 #### Solution
-descript your solution
+describe your solution
 
 #### What issue action is associated with this pull request?
 
