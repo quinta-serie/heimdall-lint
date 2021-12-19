@@ -1,5 +1,4 @@
 const CliCommandHandler = require('./cli-command-handler')
-const DefaultCommandHandler = require('./default-command-handler')
 
 /* eslint-disable require-jsdoc */
 class CommandHandler {
@@ -9,10 +8,6 @@ class CommandHandler {
 
   _setUp() {
     const cliCommandHandler = new CliCommandHandler()
-    const defaultCommandHandler = new DefaultCommandHandler()
-
-    cliCommandHandler
-      .setNext(defaultCommandHandler)
 
     return cliCommandHandler
   }
