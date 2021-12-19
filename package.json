@@ -7,7 +7,9 @@
   "scripts": {
     "test": "mocha --recursive src",
     "test:coverage": "nyc --check-coverage --reporter=text -- npm run test",
-    "test:watch": "npm run test -- -w"
+    "test:watch": "npm run test -- -w",
+    "lint": "eslint --ext .js src --max-warnings=0",
+    "lint:fix": "npm run lint -- --fix"
   },
   "repository": {
     "type": "git",
