@@ -7,7 +7,7 @@ on:
       - '!main' # excludes main
 
 jobs:
-  unit_tests:
+  lint:
     runs-on: ubuntu-latest
 
     strategy:
