@@ -12,6 +12,7 @@ class CommandHandler {
 
   /**
    * @param { import('commander').Command } command - Instance of Command
+   * @param { Array<string> } argv - Array with arguments from process.argv
    */
   run(command, argv) {
     this._headHandler.setUp(command)
