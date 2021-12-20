@@ -1,16 +1,16 @@
 /* eslint-disable require-jsdoc */
-const AbstractHandler = require('../helpers/abstract-handler')
+const AbstractCommandHandler = require('./abstract-command-handler')
 
-class CliCommandHandler extends AbstractHandler {
+class CliCommandHandler extends AbstractCommandHandler {
   /**
    * @param { import('commander').Command } command - Instance of Command
    * @return { AbstractHandler }
    */
   setUp(command) {
     command
-      .option('-d, --debug', 'output extra debugging')
-      .option('-s, --small', 'small pizza size')
-      .option('-p, --pizza-type <type>', 'flavour of pizza')
+      .option('-p, --path <path>', 'change the path where the lint is fired')
+      .option('-o, --olny <rules>', 'run the lint with only this rules')
+      .option('-e, --except <rules>', 'run the lint without this rules')
 
     return super.setUp(command)
   }
@@ -20,15 +20,12 @@ class CliCommandHandler extends AbstractHandler {
    * @return { AbstractHandler }
    */
   handle(command) {
-    try {
-      const options = command.opts()
-      if (options.debug) console.log(options)
-      if (options.small) console.log('- small pizza size')
-      if (options.pizzaType) console.log(`- ${options.pizzaType}`)
+    const options = command.opts()
+    const path = options.path || process.cwd()
 
-      return super.handle(command)
-    } catch (_) {
-      return null
+    if (path) {
+      console.log(options)
+      console.log(path)
     }
   }
 }
