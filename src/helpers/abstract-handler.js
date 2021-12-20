@@ -17,7 +17,7 @@ class AbstractHandler {
 
   /**
    * @param { * } data - The data object
-   * @return { AbstractHandler }
+   * @return { AbstractHandler | null }
    */
   handle(data) {
     if (this.nextHandler) {
