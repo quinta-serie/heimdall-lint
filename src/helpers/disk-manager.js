@@ -20,6 +20,30 @@ function listDir(path) {
   }
 }
 
+/**
+ * Returns the content of file
+ * @param { string } path - The path to be listed
+ * @returns { Array<string> }
+ * @throws { Error }
+ */
+function loadFile(path) {
+  if (!path || typeof path !== 'string') {
+    throw new Error('The path must be a valid string')
+  }
+
+  try {
+    const contentBuffer = readFileSync(path, {
+      encoding: 'utf8'
+    })
+    const fileContent = String(contentBuffer)
+
+    return fileContent.split(/\n/)
+  } catch (_) {
+    return []
+  }
+}
+
 module.exports = {
-  listDir
+  listDir,
+  loadFile
 }
