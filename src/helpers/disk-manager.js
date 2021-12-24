@@ -1,9 +1,10 @@
-const fs = require('fs')
+const { readdirSync, readFileSync } = require('fs')
 
 /**
- * List all
+ * List all files and directories
  * @param { string } path - The path to be listed
  * @returns { Array<Dirent> }
+ * @throws { Error }
  */
 function listDir(path) {
   if (!path || typeof path !== 'string') {
@@ -11,7 +12,7 @@ function listDir(path) {
   }
 
   try {
-    return fs.readdirSync(path, {
+    return readdirSync(path, {
       withFileTypes: true
     })
   } catch (_) {
