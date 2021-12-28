@@ -36,7 +36,7 @@ class CliCommandHandler extends AbstractCommandHandler {
           instance: ${error.instancePath}
           message: ${error.message}
           path: ${error.schemaPath}
-          `
+        `
       }, '')
 
       throw new Error(`The file heimdallrc.json does not match with JSON Schema:
