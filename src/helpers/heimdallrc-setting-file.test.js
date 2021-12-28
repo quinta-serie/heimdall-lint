@@ -38,6 +38,13 @@ describe('helpers - heimdallrc-setting-file', () => {
           keyword: 'required',
           params: { missingProperty: 'ext' },
           message: "must have required property 'ext'"
+        },
+        {
+          instancePath: '',
+          schemaPath: '#/required',
+          keyword: 'required',
+          params: { missingProperty: 'exclude' },
+          message: "must have required property 'exclude'"
         }
       ]
 
@@ -48,7 +55,7 @@ describe('helpers - heimdallrc-setting-file', () => {
     })
 
     context('when the properties are not filled', () => {
-      const content = '{"rules": [], "ext": []}'
+      const content = '{"rules": [], "ext": [], "exclude": []}'
       const expected = [
         {
           instancePath: '/rules',
@@ -60,6 +67,13 @@ describe('helpers - heimdallrc-setting-file', () => {
         {
           instancePath: '/ext',
           schemaPath: '#/properties/ext/minItems',
+          keyword: 'minItems',
+          params: { limit: 1 },
+          message: 'must NOT have fewer than 1 items'
+        },
+        {
+          instancePath: '/exclude',
+          schemaPath: '#/properties/exclude/minItems',
           keyword: 'minItems',
           params: { limit: 1 },
           message: 'must NOT have fewer than 1 items'
@@ -87,6 +101,13 @@ describe('helpers - heimdallrc-setting-file', () => {
           keyword: 'required',
           params: { missingProperty: 'ext' },
           message: "must have required property 'ext'"
+        },
+        {
+          instancePath: '',
+          schemaPath: '#/required',
+          keyword: 'required',
+          params: { missingProperty: 'exclude' },
+          message: "must have required property 'exclude'"
         }
       ]
 
