@@ -42,7 +42,7 @@ describe('helpers - schema-validator', () => {
 
     const input = {
       test: true,
-      OLX: 'awesome',
+      lint: 'awesome',
       num: 123,
       pattern: '21-10-1991'
     }
@@ -53,7 +53,7 @@ describe('helpers - schema-validator', () => {
         test: {
           type: 'boolean'
         },
-        OLX: {
+        lint: {
           type: 'string'
         },
         num: {
@@ -74,7 +74,7 @@ describe('helpers - schema-validator', () => {
 
     const input = {
       test: 'wrong',
-      OLX: 123,
+      lint: 123,
       num: 'test',
       pattern: 'bla bla bla'
     }
@@ -85,7 +85,7 @@ describe('helpers - schema-validator', () => {
         test: {
           type: 'boolean'
         },
-        OLX: {
+        lint: {
           type: 'string'
         },
         num: {
