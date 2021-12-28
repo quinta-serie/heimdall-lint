@@ -101,6 +101,23 @@ describe('helpers - schema-validator', () => {
     assert.strictEqual(validation.validate(input, schema), false)
   })
 
+  it('returns false when the input schema is invalid', () => {
+    const validation = new SchemaValidator(new Ajv({ allErrors: true }))
+
+    const data = {
+      one: 123, two: 'test'
+    }
+
+    assert.strictEqual(validation.validate(data), false)
+    assert.strictEqual(validation.validate(data, ''), false)
+    assert.strictEqual(validation.validate(data, undefined), false)
+    assert.strictEqual(validation.validate(data, []), false)
+    assert.strictEqual(validation.validate(data, null), false)
+    assert.strictEqual(validation.validate(data, false), false)
+    assert.strictEqual(validation.validate(data, 1), false)
+    assert.strictEqual(validation.validate(data, 0), false)
+  })
+
   it('returns the errors found in the schema', () => {
     const validation = new SchemaValidator(new Ajv({ allErrors: true }))
 
