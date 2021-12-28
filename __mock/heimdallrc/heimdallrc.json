@@ -1,0 +1,11 @@
+{
+  "rules": [
+    {
+      "id": "c-001",
+      "description": "test mock",
+      "rules": ["[a-z]{2,}"],
+      "ext": ["c"]
+    }
+  ],
+  "ext": ["h", "c", "cpp"]
+}
