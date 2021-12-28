@@ -4,6 +4,15 @@ const SchemaValidator = require('./schema-validator')
 const { fileExists, loadFile } = require('./disk-manager')
 const heimdallSchema = require('../schemes/heimdallrc-schema.json')
 
+// eslint-disable-next-line require-jsdoc
+function jsonParse(fileContent, fallbackValue = {}) {
+  try {
+    return fileContent ? JSON.parse(fileContent) : fallbackValue
+  } catch(_) {
+    return fallbackValue
+  }
+}
+
 /**
  * Check if the content of heimdallrc.json is valid
  * @param { string } fileContent - The content of heimdallrc.json
@@ -11,9 +20,9 @@ const heimdallSchema = require('../schemes/heimdallrc-schema.json')
  */
 function isValid(fileContent) {
   const validator = new SchemaValidator(new Ajv({ allErrors: true }))
-  const jsonContent = JSON.parse(fileContent)
+  const jsonContent = jsonParse(fileContent)
 
-  if (validator.validate(jsonContent, heimdallSchema)) {
+  if (validator.validate(jsonContent, getHeimdallrcSchema())) {
     return true
   }
 
@@ -40,6 +49,14 @@ function getHeimdallrcContent(currentPath) {
   const fullPath = path.join(currentPath, 'heimdallrc.json')
 
   return loadFile(fullPath).join('\n')
+}
+
+/**
+ * Returns the heimdallrc Schema content
+ * @returns { Object }
+ */
+function getHeimdallrcSchema() {
+  return heimdallSchema
 }
 
 module.exports = {
