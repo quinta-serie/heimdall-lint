@@ -1,14 +1,14 @@
 const { assert } = require('chai')
-const hdlrc = require('./heimdallrc-setting-file')
+const { exists, getHeimdallrcContent, isValid } = require('./heimdallrc-setting-file')
 
 describe('helpers - heimdallrc-setting-file', () => {
   describe('#exists', () => {
     it('should returns true when there is a heimdallrc file at the base dir', () => {
-      assert.strictEqual(hdlrc.exists('./'), true)
+      assert.strictEqual(exists('./__mock/heimdallrc'), true)
     })
 
     it('should returns false when there is no heimdallrc file at the base dir', () => {
-      assert.strictEqual(hdlrc.exists('./no-exists'), false)
+      assert.strictEqual(exists('./no-exists'), false)
     })
   })
 
@@ -19,8 +19,8 @@ describe('helpers - heimdallrc-setting-file', () => {
     }
 
     it('should returns true when the heimdallrc does match with JSON schema', () => {
-      const content = hdlrc.getHeimdallrcContent('./__mock/heimdallrc')
-      assert.strictEqual(hdlrc.isValid(content), true)
+      const content = getHeimdallrcContent('./__mock/heimdallrc')
+      assert.strictEqual(isValid(content), true)
     })
 
     context('when the content is empty', () => {
@@ -42,8 +42,8 @@ describe('helpers - heimdallrc-setting-file', () => {
       ]
 
       it('should returns an Array of errors', () => {
-        testErrors(hdlrc.isValid(), expected)
-        testErrors(hdlrc.isValid(''), expected)
+        testErrors(isValid(), expected)
+        testErrors(isValid(''), expected)
       })
     })
 
@@ -67,7 +67,7 @@ describe('helpers - heimdallrc-setting-file', () => {
       ]
 
       it('should returns an Array of errors', () => {
-        testErrors(hdlrc.isValid(content), expected)
+        testErrors(isValid(content), expected)
       })
     })
 
@@ -91,7 +91,7 @@ describe('helpers - heimdallrc-setting-file', () => {
       ]
 
       it('should returns an Array of errors', () => {
-        testErrors(hdlrc.isValid(content), expected)
+        testErrors(isValid(content), expected)
       })
     })
   })
