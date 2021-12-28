@@ -5,7 +5,7 @@ class SchemaValidator {
       throw new Error('Validation engine not informed')
     }
     /**
-     * @type { Ajv }
+     * @type { import('ajv') }
      */
     this._engine = engine
     this._errors = []
