@@ -1,5 +1,5 @@
 const { assert } = require('chai')
-const { listDir, loadFile } = require('./disk-manager')
+const { listDir, loadFile, fileExists } = require('./disk-manager')
 
 describe('helpers - disk-manager', () => {
   describe('#listDir', () => {
@@ -78,6 +78,29 @@ describe('helpers - disk-manager', () => {
 
     it('should returns an empty array when the path is a directory instead a file', () => {
       assert.deepStrictEqual(loadFile('./src'), [])
+    })
+  })
+
+  describe('#fileExists', () => {
+    it('should returns true when the path passed by parameter exists', () => {
+      assert.strictEqual(fileExists('./LICENSE'), true)
+    })
+
+    it('should returns false when the path passed by parameter does not exists', () => {
+      assert.strictEqual(fileExists('./not-exists'), false)
+    })
+
+    it('should returns false when the path passed by parameter is not a valid string', () => {
+      assert.strictEqual(fileExists(''), false)
+      assert.strictEqual(fileExists(), false)
+      assert.strictEqual(fileExists(1), false)
+      assert.strictEqual(fileExists(0), false)
+      assert.strictEqual(fileExists(true), false)
+      assert.strictEqual(fileExists(false), false)
+      assert.strictEqual(fileExists(undefined), false)
+      assert.strictEqual(fileExists([]), false)
+      assert.strictEqual(fileExists({}), false)
+      assert.strictEqual(fileExists(null), false)
     })
   })
 })

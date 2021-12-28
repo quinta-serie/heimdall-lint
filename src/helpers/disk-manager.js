@@ -1,4 +1,4 @@
-const { readdirSync, readFileSync } = require('fs')
+const { readdirSync, readFileSync, existsSync } = require('fs')
 
 /**
  * List all files and directories
@@ -43,7 +43,17 @@ function loadFile(path) {
   }
 }
 
+/**
+ * Check if the path exists
+ * @param { string } path - The path to be checked
+ * @returns { boolean }
+ */
+function fileExists(path) {
+  return existsSync(path)
+}
+
 module.exports = {
   listDir,
-  loadFile
+  loadFile,
+  fileExists
 }
