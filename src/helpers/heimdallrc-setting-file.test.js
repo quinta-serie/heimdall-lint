@@ -55,7 +55,7 @@ describe('helpers - heimdallrc-setting-file', () => {
     })
 
     context('when the properties are not filled', () => {
-      const content = '{"rules": [], "ext": [], "exclude": []}'
+      const content = { rules: [], ext: [], exclude: [] }
       const expected = [
         {
           instancePath: '/rules',
@@ -86,7 +86,7 @@ describe('helpers - heimdallrc-setting-file', () => {
     })
 
     context('when the content is an invalid JSON String', () => {
-      const content = '{test: undefined}'
+      const content = { test: undefined }
       const expected = [
         {
           instancePath: '',
