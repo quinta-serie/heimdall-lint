@@ -7,7 +7,7 @@ const heimdallSchema = require('../schemes/heimdallrc-schema.json')
 // eslint-disable-next-line require-jsdoc
 function jsonParse(fileContent, fallbackValue = {}) {
   try {
-    return fileContent ? JSON.parse(fileContent) : fallbackValue
+    return JSON.parse(fileContent)
   } catch(_) {
     return fallbackValue
   }
@@ -45,13 +45,17 @@ function getHeimdallrcContent(currentPath) {
   const fullPath = path.join(currentPath, 'heimdallrc.json')
   const heimdallrcContent = jsonParse(loadFile(fullPath).join(''))
 
-  heimdallrcContent.rules.forEach(rule => {
-    rule.rules = rule.rules.map(r => new RegExp(r))
-  })
+  if (heimdallrcContent.rules) {
+    heimdallrcContent.rules.forEach(rule => {
+      rule.rules = rule.rules.map(r => new RegExp(r))
+    })
+  }
 
-  heimdallrcContent.exclude = heimdallrcContent.exclude.map(r => new RegExp(r))
+  if (heimdallrcContent.exclude) {
+    heimdallrcContent.exclude = heimdallrcContent.exclude.map(r => new RegExp(r))
+  }
 
-  return heimdallrcContent
+  return heimdallrcContent.rules ? heimdallrcContent : undefined
 }
 
 /**

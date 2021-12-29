@@ -116,4 +116,24 @@ describe('helpers - heimdallrc-setting-file', () => {
       })
     })
   })
+
+  describe('#getHeimdallrcContent', () => {
+    it('should returns undefined when the path does not exists', () => {
+      assert.isUndefined(getHeimdallrcContent('./no-exists'))
+    })
+
+    it('should returns undefined when there is no heimdallrc.json file in the path informed', () => {
+      assert.isUndefined(getHeimdallrcContent('./src'))
+    })
+
+    it('should returns the heimdallrc.json content as an Object', () => {
+      const heimdallrc = getHeimdallrcContent('./__mock/heimdallrc')
+
+      assert.isArray(heimdallrc.rules)
+      assert.isArray(heimdallrc.ext)
+      assert.isArray(heimdallrc.exclude)
+      assert.instanceOf(heimdallrc.rules[0].rules[0], RegExp)
+      assert.instanceOf(heimdallrc.exclude[0], RegExp)
+    })
+  })
 })
