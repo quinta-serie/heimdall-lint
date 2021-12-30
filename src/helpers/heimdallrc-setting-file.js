@@ -7,7 +7,7 @@ const heimdallSchema = require('../schemes/heimdallrc-schema.json')
 // eslint-disable-next-line require-jsdoc
 function jsonParse(fileContent, fallbackValue = {}) {
   try {
-    return fileContent ? JSON.parse(fileContent) : fallbackValue
+    return JSON.parse(fileContent)
   } catch(_) {
     return fallbackValue
   }
@@ -15,18 +15,14 @@ function jsonParse(fileContent, fallbackValue = {}) {
 
 /**
  * Check if the content of heimdallrc.json is valid
- * @param { string } fileContent - The content of heimdallrc.json
+ * @param { Object } fileContent - The content of heimdallrc.json as an Object
  * @returns { boolean | Array }
  */
 function isValid(fileContent) {
   const validator = new SchemaValidator(new Ajv({ allErrors: true }))
-  const jsonContent = jsonParse(fileContent)
+  const result = validator.validate(fileContent || {}, getHeimdallrcSchema())
 
-  if (validator.validate(jsonContent, getHeimdallrcSchema())) {
-    return true
-  }
-
-  return validator.getErrors()
+  return result ? true : validator.getErrors()
 }
 
 /**
@@ -41,14 +37,25 @@ function exists(currentPath) {
 }
 
 /**
- * Load the content of heimdallrc.json and return it
+ * Load the content of heimdallrc.json and return it as an Object
  * @param { string } currentPath - The current path of execution
- * @returns { string }
+ * @returns { Object }
  */
 function getHeimdallrcContent(currentPath) {
   const fullPath = path.join(currentPath, 'heimdallrc.json')
+  const heimdallrcContent = jsonParse(loadFile(fullPath).join(''))
 
-  return loadFile(fullPath).join('\n')
+  if (heimdallrcContent.rules) {
+    heimdallrcContent.rules.forEach(rule => {
+      rule.rules = rule.rules.map(r => new RegExp(r))
+    })
+  }
+
+  if (heimdallrcContent.exclude) {
+    heimdallrcContent.exclude = heimdallrcContent.exclude.map(r => new RegExp(r))
+  }
+
+  return heimdallrcContent.rules ? heimdallrcContent : undefined
 }
 
 /**

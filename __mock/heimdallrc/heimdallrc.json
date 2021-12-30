@@ -7,5 +7,6 @@
       "ext": ["c"]
     }
   ],
-  "ext": ["h", "c", "cpp"]
+  "ext": ["h", "c", "cpp"],
+  "exclude": [".git"]
 }

@@ -1,4 +1,5 @@
 /* eslint-disable require-jsdoc */
+const { discoverAndPrintErrors } = require('../helpers/discover-files')
 const { exists, isValid, getHeimdallrcContent } = require('../helpers/heimdallrc-setting-file')
 const AbstractCommandHandler = require('./abstract-command-handler')
 
@@ -44,10 +45,9 @@ class CliCommandHandler extends AbstractCommandHandler {
       `)
     }
 
-    if (path) {
-      console.log(options)
-      console.log(path)
-    }
+    discoverAndPrintErrors(path, getHeimdallrcContent(path), options)
+
+    return super.handle(command)
   }
 }
 
