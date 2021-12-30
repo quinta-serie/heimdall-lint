@@ -9,7 +9,7 @@ function checkRules(fileDetail, fileContent, rules) {
   const result = {
     path: fileDetail.fullPath,
     hasError: false,
-    errors: []
+    errors: {}
   }
 
   let lineNumber = 1
@@ -21,11 +21,19 @@ function checkRules(fileDetail, fileContent, rules) {
       const rule = detail.rules.find(re => re.test(line))
 
       if (rule) {
-        result.errors.push({
-          lineNumber,
+        if (!result.errors[detail.id]) {
+          result.errors[detail.id] = {
+            id: detail.id,
+            description: detail.description,
+            discoveries: []
+          }
+
+          result.hasError = true
+        }
+
+        result.errors[detail.id].discoveries.push({
           lineContent: line,
-          description: detail.description,
-          id: detail.id,
+          lineNumber,
           rule
         })
       }
@@ -33,8 +41,6 @@ function checkRules(fileDetail, fileContent, rules) {
 
     lineNumber += 1
   }
-
-  result.hasError = Boolean(result.errors.length)
 
   return result
 }
