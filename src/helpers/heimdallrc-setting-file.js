@@ -47,7 +47,7 @@ function getHeimdallrcContent(currentPath) {
 
   if (heimdallrcContent.rules) {
     heimdallrcContent.rules.forEach(rule => {
-      rule.rules = rule.rules.map(r => new RegExp(r))
+      rule.rules = rule.rules.map(r => new RegExp(r, 'g'))
     })
   }
 
