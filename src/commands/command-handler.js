@@ -1,3 +1,4 @@
+const colors = require('colors/safe')
 const CliCommandHandler = require('./cli-command-handler')
 
 /* eslint-disable require-jsdoc */
@@ -15,11 +16,15 @@ class CommandHandler {
    * @param { Array<string> } argv - Array with arguments from process.argv
    */
   run(command, argv) {
-    this._headHandler.setUp(command)
+    try {
+      this._headHandler.setUp(command)
 
-    command.parse(argv)
+      command.parse(argv)
 
-    this._headHandler.handle(command)
+      this._headHandler.handle(command)
+    } catch (ex) {
+      console.log(colors.red(ex.message))
+    }
   }
 }
 
