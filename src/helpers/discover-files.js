@@ -5,8 +5,8 @@ const { listDir, loadFile } = require('./disk-manager')
 /**
  * Explorer the files in current path
  * @param { string } path - Tha base dir path
- * @param { Object } heimdallrc - The heimdallrc content
- * @param { Object } options - The command options
+ * @param { Heimdallrc } heimdallrc - The heimdallrc content
+ * @param { import('commander').OptionValues } options - The command options
  */
 function discoverAndPrintErrors(path, heimdallrc, options) {
   const list = listDir(path)
