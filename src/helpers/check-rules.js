@@ -1,3 +1,5 @@
+const colors = require('colors/safe')
+
 /**
  * Check the rules in fileContent
  * @param { FileDetail } fileDetail - The path of file
@@ -52,8 +54,29 @@ function checkRules(fileDetail, fileContent, rules) {
 function printErrors(error) {
   if (!error.hasError) return
 
-  console.log('## path:', error.path)
-  console.log(error.errors)
+  console.log(colors.grey(`## ${error.path}`))
+
+  Object.values(error.errors).forEach(err => {
+    console.log(colors.red(`${err.id} - ${err.description}`))
+
+    err.discoveries.forEach(detail => {
+      console.log(`${colors.yellow(detail.lineNumber)} ${addHighlights(detail.rule, detail.lineContent)}`)
+    })
+
+    console.log('')
+  })
+}
+
+/**
+ * Add highlights on text using the RegEx
+ * @param { RegExp } regex - The pattern used to detect the highlight
+ * @param { string } text - The target text
+ * @returns { string }
+ */
+function addHighlights(regex, text) {
+  const withHighlight = text.replace(regex, input => colors.bgRed(input))
+
+  return colors.white(withHighlight)
 }
 
 module.exports = {
