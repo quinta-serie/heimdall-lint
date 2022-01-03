@@ -1,29 +1,4 @@
-/**
- * @typedef Rule
- * @property { string } id
- * @property { string } description
- * @property { Array<string> } rules
- * @property { Array<string> } [ext]
- */
-/**
- * @typedef RuleError
- * @property { string } path
- * @property { boolean } hasError
- * @property { Array<RuleErrorDetail> } errors
- */
-/**
- * @typedef RuleErrorDetail
- * @property { number } lineNumber
- * @property { string } lineContent
- * @property { string } id
- * @property { string } description
- * @property { RegExp } rule
- */
-/**
- * @typedef FileDetail
- * @property { string } fullPath
- * @property { string } extension
- */
+const colors = require('colors/safe')
 
 /**
  * Check the rules in fileContent
@@ -36,7 +11,7 @@ function checkRules(fileDetail, fileContent, rules) {
   const result = {
     path: fileDetail.fullPath,
     hasError: false,
-    errors: []
+    errors: {}
   }
 
   let lineNumber = 1
@@ -48,11 +23,19 @@ function checkRules(fileDetail, fileContent, rules) {
       const rule = detail.rules.find(re => re.test(line))
 
       if (rule) {
-        result.errors.push({
-          lineNumber,
+        if (!result.errors[detail.id]) {
+          result.errors[detail.id] = {
+            id: detail.id,
+            description: detail.description,
+            discoveries: []
+          }
+
+          result.hasError = true
+        }
+
+        result.errors[detail.id].discoveries.push({
           lineContent: line,
-          description: detail.description,
-          id: detail.id,
+          lineNumber,
           rule
         })
       }
@@ -60,8 +43,6 @@ function checkRules(fileDetail, fileContent, rules) {
 
     lineNumber += 1
   }
-
-  result.hasError = Boolean(result.errors.length)
 
   return result
 }
@@ -73,8 +54,29 @@ function checkRules(fileDetail, fileContent, rules) {
 function printErrors(error) {
   if (!error.hasError) return
 
-  console.log('## path:', error.path)
-  console.log(error.errors)
+  console.log(colors.grey(`## ${error.path}`))
+
+  Object.values(error.errors).forEach(err => {
+    console.log(colors.red(`${err.id} - ${err.description}`))
+
+    err.discoveries.forEach(detail => {
+      console.log(`${colors.yellow(detail.lineNumber)} ${addHighlights(detail.rule, detail.lineContent)}`)
+    })
+
+    console.log('')
+  })
+}
+
+/**
+ * Add highlights on text using the RegEx
+ * @param { RegExp } regex - The pattern used to detect the highlight
+ * @param { string } text - The target text
+ * @returns { string }
+ */
+function addHighlights(regex, text) {
+  const withHighlight = text.replace(regex, input => colors.bgRed(input))
+
+  return colors.white(withHighlight)
 }
 
 module.exports = {

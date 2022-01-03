@@ -39,7 +39,7 @@ function exists(currentPath) {
 /**
  * Load the content of heimdallrc.json and return it as an Object
  * @param { string } currentPath - The current path of execution
- * @returns { Object }
+ * @returns { Heimdallrc }
  */
 function getHeimdallrcContent(currentPath) {
   const fullPath = path.join(currentPath, 'heimdallrc.json')
@@ -47,7 +47,7 @@ function getHeimdallrcContent(currentPath) {
 
   if (heimdallrcContent.rules) {
     heimdallrcContent.rules.forEach(rule => {
-      rule.rules = rule.rules.map(r => new RegExp(r))
+      rule.rules = rule.rules.map(r => new RegExp(r, 'g'))
     })
   }
 
