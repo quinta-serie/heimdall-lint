@@ -89,7 +89,7 @@ function addHighlights(regex, text) {
  */
 function getMatchedRule(rules, lineContent) {
   for (let rule of rules) {
-    const regex = new RegExp(rule)
+    const regex = new RegExp(rule, 'g')
 
     if (regex.test(lineContent)) return regex
   }
