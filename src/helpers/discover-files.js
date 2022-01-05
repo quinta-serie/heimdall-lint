@@ -7,8 +7,9 @@ const { listDir, loadFile } = require('./disk-manager')
  * @param { string } path - Tha base dir path
  * @param { Heimdallrc } heimdallrc - The heimdallrc content
  * @param { import('commander').OptionValues } options - The command options
+ * @param { ErrorDetector } errorDetector - Informs that erros are found
  */
-function discoverAndPrintErrors(path, heimdallrc, options) {
+function discoverAndPrintErrors(path, heimdallrc, options, errorDetector) {
   const list = listDir(path)
 
   for (let item of list) {
@@ -20,7 +21,7 @@ function discoverAndPrintErrors(path, heimdallrc, options) {
 
     if (item.isDirectory()) {
       // find new files into directory
-      discoverAndPrintErrors(fullPath, heimdallrc, options)
+      discoverAndPrintErrors(fullPath, heimdallrc, options, errorDetector)
     } else {
       const extension = item.name.split('.').pop()
       const isAllowedExtension = heimdallrc.ext.includes(extension)
@@ -30,6 +31,10 @@ function discoverAndPrintErrors(path, heimdallrc, options) {
         const errors = checkRules({ fullPath, extension }, fileContent, heimdallrc)
 
         printErrors(errors)
+
+        if (errors.hasError) {
+          errorDetector.hasError = true
+        }
       }
     }
   }

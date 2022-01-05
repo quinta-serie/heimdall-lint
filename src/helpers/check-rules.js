@@ -68,8 +68,6 @@ function printErrors(error) {
 
     console.log('')
   })
-
-  if (error.hasError) process.exit(1)
 }
 
 /**

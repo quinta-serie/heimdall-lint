@@ -44,3 +44,8 @@
  * @property { string } fullPath
  * @property { string } extension
  */
+
+/**
+ * @typedef ErrorDetector
+ * @property { boolean } hasError
+ */
