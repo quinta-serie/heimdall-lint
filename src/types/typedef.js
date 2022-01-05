@@ -9,7 +9,7 @@
  * @typedef Rule
  * @property { string } id
  * @property { string } description
- * @property { Array<RegExp> } rules
+ * @property { Array<string> } rules
  * @property { Array<string> } [ext]
  */
 

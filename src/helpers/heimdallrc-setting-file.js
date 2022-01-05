@@ -45,14 +45,6 @@ function getHeimdallrcContent(currentPath) {
   const fullPath = path.join(currentPath, 'heimdallrc.json')
   const heimdallrcContent = jsonParse(loadFile(fullPath).join(''))
 
-  if (heimdallrcContent.rules) {
-    heimdallrcContent.rules.forEach(rule => {
-      if (Array.isArray(rule.rules)) {
-        rule.rules = rule.rules.map(r => new RegExp(r, 'g'))
-      }
-    })
-  }
-
   if (heimdallrcContent.exclude) {
     heimdallrcContent.exclude = heimdallrcContent.exclude.map(r => new RegExp(r))
   }

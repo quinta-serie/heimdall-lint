@@ -16,11 +16,11 @@ function checkRules(fileDetail, fileContent, rules) {
 
   let lineNumber = 1
 
-  for(let line of fileContent) {
+  for(let lineContent of fileContent) {
     for(let detail of rules) {
       if (detail.ext && !detail.ext.includes(fileDetail.extension)) continue
 
-      const rule = detail.rules.find(re => re.test(line))
+      const rule = getMatchedRule(detail.rules, lineContent)
 
       if (rule) {
         if (!result.errors[detail.id]) {
@@ -34,7 +34,7 @@ function checkRules(fileDetail, fileContent, rules) {
         }
 
         result.errors[detail.id].discoveries.push({
-          lineContent: line,
+          lineContent,
           lineNumber,
           rule
         })
@@ -65,6 +65,8 @@ function printErrors(error) {
 
     console.log('')
   })
+
+  if (error.hasError) process.exit(1)
 }
 
 /**
@@ -77,6 +79,22 @@ function addHighlights(regex, text) {
   const withHighlight = text.replace(regex, input => colors.bgRed(input))
 
   return colors.white(withHighlight)
+}
+
+/**
+ * Check with the line does match with some rule and returns this rule
+ * @param { Array<string> } rules - The array of rules
+ * @param { string } lineContent - The content of line
+ * @returns { RegExp | null }
+ */
+function getMatchedRule(rules, lineContent) {
+  for (let rule of rules) {
+    const regex = new RegExp(rule, 'g')
+
+    if (regex.test(lineContent)) return regex
+  }
+
+  return null
 }
 
 module.exports = {

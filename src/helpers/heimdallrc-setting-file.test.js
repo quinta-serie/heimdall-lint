@@ -132,7 +132,7 @@ describe('helpers - heimdallrc-setting-file', () => {
       assert.isArray(heimdallrc.rules)
       assert.isArray(heimdallrc.ext)
       assert.isArray(heimdallrc.exclude)
-      assert.instanceOf(heimdallrc.rules[0].rules[0], RegExp)
+      assert.isArray(heimdallrc.rules[0].rules)
       assert.instanceOf(heimdallrc.exclude[0], RegExp)
     })
   })
