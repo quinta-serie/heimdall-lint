@@ -44,6 +44,12 @@
         "minLength": 1
       }
     },
+    "ignore-content": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
     "exclude": {
       "type": "array",
       "minItems": 1,

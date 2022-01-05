@@ -49,6 +49,10 @@ function getHeimdallrcContent(currentPath) {
     heimdallrcContent.exclude = heimdallrcContent.exclude.map(r => new RegExp(r))
   }
 
+  if (heimdallrcContent['ignore-content']) {
+    heimdallrcContent['ignore-content'] = heimdallrcContent['ignore-content'].map(r => new RegExp(r, 'g'))
+  }
+
   return heimdallrcContent.rules ? heimdallrcContent : undefined
 }
 

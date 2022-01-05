@@ -1,6 +1,7 @@
 /**
  * @typedef Heimdallrc
  * @property { Array<string> } ext
+ * @property { Array<RegExp> } `ignore-content`
  * @property { Array<RegExp> } exclude
  * @property { Array<Rule> } rules
  */

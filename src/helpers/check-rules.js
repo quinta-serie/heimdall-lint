@@ -4,10 +4,10 @@ const colors = require('colors/safe')
  * Check the rules in fileContent
  * @param { FileDetail } fileDetail - The path of file
  * @param { Array<string> } fileContent - The file content
- * @param { Array<Rule> } rules - The rules from heimdallrc
+ * @param { Heimdallrc } heimdallrc - The rules from heimdallrc
  * @returns { RuleError }
  */
-function checkRules(fileDetail, fileContent, rules) {
+function checkRules(fileDetail, fileContent, heimdallrc) {
   const result = {
     path: fileDetail.fullPath,
     hasError: false,
@@ -17,26 +17,27 @@ function checkRules(fileDetail, fileContent, rules) {
   let lineNumber = 1
 
   for(let lineContent of fileContent) {
-    for(let detail of rules) {
-      if (detail.ext && !detail.ext.includes(fileDetail.extension)) continue
+    for(let rule of heimdallrc.rules) {
+      if (rule.ext && !rule.ext.includes(fileDetail.extension)) continue
 
-      const rule = getMatchedRule(detail.rules, lineContent)
+      const content = blinderContent(lineContent, heimdallrc['ignore-content'])
+      const matchedRule = getMatchedRule(rule.rules, content)
 
-      if (rule) {
-        if (!result.errors[detail.id]) {
-          result.errors[detail.id] = {
-            id: detail.id,
-            description: detail.description,
+      if (matchedRule) {
+        if (!result.errors[rule.id]) {
+          result.errors[rule.id] = {
+            id: rule.id,
+            description: rule.description,
             discoveries: []
           }
 
           result.hasError = true
         }
 
-        result.errors[detail.id].discoveries.push({
+        result.errors[rule.id].discoveries.push({
           lineContent,
           lineNumber,
-          rule
+          rule: matchedRule
         })
       }
     }
@@ -97,6 +98,21 @@ function getMatchedRule(rules, lineContent) {
   }
 
   return null
+}
+
+/**
+ * Replace all contents to be ignored
+ * @param { string } lineContent - The content of line
+ * @param { Array<RegExp> } ignoreContent - Array of replacers content
+ * @returns { string }
+ */
+function blinderContent(lineContent, ignoreContent) {
+  const blinder = Date.now()
+
+  return (ignoreContent || [])
+    .reduce((line, replacer) => {
+      return line.replace(replacer, `"${blinder}"`)
+    }, lineContent)
 }
 
 module.exports = {

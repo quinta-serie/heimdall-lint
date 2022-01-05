@@ -27,7 +27,7 @@ function discoverAndPrintErrors(path, heimdallrc, options) {
 
       if (isAllowedExtension) {
         const fileContent = loadFile(fullPath)
-        const errors = checkRules({ fullPath, extension }, fileContent, heimdallrc.rules)
+        const errors = checkRules({ fullPath, extension }, fileContent, heimdallrc)
 
         printErrors(errors)
       }
