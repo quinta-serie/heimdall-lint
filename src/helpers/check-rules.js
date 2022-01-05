@@ -60,7 +60,9 @@ function printErrors(error) {
     console.log(colors.red(`${err.id} - ${err.description}`))
 
     err.discoveries.forEach(detail => {
-      console.log(`${colors.yellow(detail.lineNumber)} ${addHighlights(detail.rule, detail.lineContent)}`)
+      const lineContent = `${colors.yellow(detail.lineNumber)} ${addHighlights(detail.rule, detail.lineContent)}`
+
+      console.log(lineContent.replace(/\n/, ''))
     })
 
     console.log('')
