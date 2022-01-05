@@ -36,8 +36,9 @@ function loadFile(path) {
       encoding: 'utf8'
     })
     const fileContent = String(contentBuffer)
+    const delimiter = `#${Date.now()}`
 
-    return fileContent.split(/\n/)
+    return fileContent.replace(/\n/g, `\n${delimiter}`).split(delimiter)
   } catch (_) {
     return []
   }
