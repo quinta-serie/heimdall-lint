@@ -88,7 +88,7 @@ function addHighlights(regex, text) {
  * Check with the line does match with some rule and returns this rule
  * @param { Array<string> } rules - The array of rules
  * @param { string } lineContent - The content of line
- * @returns { RegExp | null }
+ * @returns { RegExp | undefined }
  */
 function getMatchedRule(rules, lineContent) {
   for (let rule of rules) {
@@ -96,8 +96,6 @@ function getMatchedRule(rules, lineContent) {
 
     if (regex.test(lineContent)) return regex
   }
-
-  return null
 }
 
 /**
