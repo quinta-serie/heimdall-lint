@@ -105,11 +105,9 @@ function getMatchedRule(rules, lineContent) {
  * @returns { string }
  */
 function blinderContent(lineContent, ignoreContent) {
-  const blinder = Date.now()
-
   return (ignoreContent || [])
     .reduce((line, replacer) => {
-      return line.replace(replacer, `"${blinder}"`)
+      return line.replace(replacer, 'Ø') // the character Ø is just to avoid macthes with other rules
     }, lineContent)
 }
 
