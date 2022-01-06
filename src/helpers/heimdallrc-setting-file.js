@@ -43,13 +43,17 @@ function exists(currentPath) {
  */
 function getHeimdallrcContent(currentPath) {
   const fullPath = path.join(currentPath, 'heimdallrc.json')
-  const heimdallrcContent = jsonParse(loadFile(fullPath).join(''))
+  const content = jsonParse(loadFile(fullPath).join(''))
 
-  if (heimdallrcContent.exclude) {
-    heimdallrcContent.exclude = heimdallrcContent.exclude.map(r => new RegExp(r))
+  if (content.exclude) {
+    content.exclude = content.exclude.map(r => new RegExp(r))
   }
 
-  return heimdallrcContent.rules ? heimdallrcContent : undefined
+  if (content['ignore-content']) {
+    content['ignore-content'] = content['ignore-content'].map(r => new RegExp(r, 'g'))
+  }
+
+  return content.rules ? content : undefined
 }
 
 /**

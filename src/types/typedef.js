@@ -1,6 +1,7 @@
 /**
  * @typedef Heimdallrc
  * @property { Array<string> } ext
+ * @property { Array<RegExp> } `ignore-content`
  * @property { Array<RegExp> } exclude
  * @property { Array<Rule> } rules
  */
@@ -42,4 +43,9 @@
  * @typedef FileDetail
  * @property { string } fullPath
  * @property { string } extension
+ */
+
+/**
+ * @typedef ErrorDetector
+ * @property { boolean } hasError
  */

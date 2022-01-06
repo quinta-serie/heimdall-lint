@@ -22,6 +22,7 @@ class CliCommandHandler extends AbstractCommandHandler {
    * @return { AbstractHandler }
    */
   handle(command) {
+    const errorDetector = { hasError: false }
     const options = command.opts()
     const path = options.path || process.cwd()
 
@@ -31,7 +32,11 @@ class CliCommandHandler extends AbstractCommandHandler {
 
     this._validateHeimdallrcContent(heimdallrcContent)
 
-    discoverAndPrintErrors(path, heimdallrcContent, options)
+    discoverAndPrintErrors(path, heimdallrcContent, options, errorDetector)
+
+    if (errorDetector.hasError) {
+      process.exit(1)
+    }
 
     return super.handle(command)
   }

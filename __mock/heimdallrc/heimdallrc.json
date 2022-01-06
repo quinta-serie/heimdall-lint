@@ -7,6 +7,9 @@
       "ext": ["c"]
     }
   ],
+  "ignore-content": [
+    "\\\".*\\\"|'.*'"
+  ],
   "ext": ["h", "c", "cpp"],
   "exclude": [".git"]
 }
