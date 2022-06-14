@@ -13,6 +13,6 @@ npm run test
 
 ### How to contribute
 
-- Read this beautiful [document](CONTRIBUTING.md).
+- Read this beautiful [document](CONTRIBUTING.md)
 
 ## LAUS DEO ∴
